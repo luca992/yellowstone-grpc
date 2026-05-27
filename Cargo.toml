@@ -75,12 +75,12 @@ vergen = "9.0.6"
 tikv-jemallocator = "0.6.1"
 
 # Agave Monorepo
-agave-geyser-plugin-interface = "=3.1.14"
-solana-account-decoder = "=3.1.14"
+agave-geyser-plugin-interface = "~3.1.14"
+solana-account-decoder = "~3.1.14"
 solana-logger = "3.0.0"
-solana-storage-proto = { version = "=3.1.14", features = ["agave-unstable-api"] }
-solana-transaction-context = "=3.1.14"
-solana-transaction-status = "=3.1.14"
+solana-storage-proto = { version = "~3.1.14", features = ["agave-unstable-api"] }
+solana-transaction-context = "~3.1.14"
+solana-transaction-status = "~3.1.14"
 
 # Solana SDK
 solana-account = "3.0.0"

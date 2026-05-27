@@ -14,6 +14,9 @@ publish = true
 account-data-as-bytes = [
     "yellowstone-grpc-proto/account-data-as-bytes"
 ]
+convert = [
+    "yellowstone-grpc-proto/convert"
+]
 test-tools = []
 
 [dependencies]

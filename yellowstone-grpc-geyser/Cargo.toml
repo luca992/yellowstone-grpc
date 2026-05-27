@@ -77,7 +77,7 @@ spl-token-2022-interface = { workspace = true }
 prost_011 = { workspace = true, optional = true }
 
 # Yellowstone
-yellowstone-grpc-proto = { workspace = true, features = ["tonic", "account-data-as-bytes"] }
+yellowstone-grpc-proto = { workspace = true, features = ["tonic", "account-data-as-bytes", "convert"] }
 
 [[bench]]
 name = "encode"
