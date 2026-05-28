@@ -1033,8 +1033,6 @@ pub mod tests {
         message::{MessageSlot, MessageTransaction, SlotStatus},
     };
     #[cfg(test)]
-    use prost::Message as _;
-    #[cfg(test)]
     use yellowstone_grpc_proto::geyser::SubscribeUpdate;
     use {
         super::{FilteredUpdateBlock, FilteredUpdateFilters},
@@ -1047,7 +1045,7 @@ pub mod tests {
             },
         },
         bytes::Bytes,
-        prost_011::Message as _,
+        prost::Message as _,
         prost_types::Timestamp,
         solana_hash::Hash,
         solana_pubkey::Pubkey,

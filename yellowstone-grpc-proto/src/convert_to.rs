@@ -2,8 +2,8 @@ use {
     crate::prelude as proto,
     solana_clock::UnixTimestamp,
     solana_message::{
-        compiled_instruction::CompiledInstruction, v0::MessageAddressTableLookup, MessageHeader,
-        VersionedMessage,
+        compiled_instruction::CompiledInstruction, v0::MessageAddressTableLookup,
+        v1::TransactionConfig, MessageHeader, VersionedMessage,
     },
     solana_pubkey::Pubkey,
     solana_signature::Signature,
@@ -36,6 +36,7 @@ pub fn create_message(message: &VersionedMessage) -> proto::Message {
             instructions: create_instructions(&message.instructions),
             versioned: false,
             address_table_lookups: vec![],
+            config: None,
         },
         VersionedMessage::V0(message) => proto::Message {
             header: Some(create_header(&message.header)),
@@ -44,7 +45,26 @@ pub fn create_message(message: &VersionedMessage) -> proto::Message {
             instructions: create_instructions(&message.instructions),
             versioned: true,
             address_table_lookups: create_lookups(&message.address_table_lookups),
+            config: None,
         },
+        VersionedMessage::V1(message) => proto::Message {
+            header: Some(create_header(&message.header)),
+            account_keys: create_pubkeys(&message.account_keys),
+            recent_blockhash: message.lifetime_specifier.to_bytes().into(),
+            instructions: create_instructions(&message.instructions),
+            versioned: true,
+            address_table_lookups: vec![],
+            config: Some(create_transaction_config(&message.config)),
+        },
+    }
+}
+
+pub const fn create_transaction_config(config: &TransactionConfig) -> proto::TransactionConfig {
+    proto::TransactionConfig {
+        priority_fee: config.priority_fee,
+        compute_unit_limit: config.compute_unit_limit,
+        loaded_accounts_data_size_limit: config.loaded_accounts_data_size_limit,
+        heap_size: config.heap_size,
     }
 }
 
@@ -232,6 +252,7 @@ pub const fn create_reward_type(reward_type: Option<RewardType>) -> proto::Rewar
         Some(RewardType::Rent) => proto::RewardType::Rent,
         Some(RewardType::Staking) => proto::RewardType::Staking,
         Some(RewardType::Voting) => proto::RewardType::Voting,
+        Some(RewardType::DeactivatedStake) => proto::RewardType::DeactivatedStake,
     }
 }
 
